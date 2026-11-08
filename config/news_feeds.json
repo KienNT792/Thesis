@@ -1,0 +1,17 @@
+{
+  "_comment": "Only feeds verified to return valid RSS with per-item pubDate on 2026-11-08 (checked from a normal browser). Typical RSS depth is 2-3 days, so the collector must run several times per day.",
+  "user_agent": "Mozilla/5.0 (compatible; ThesisNewsCollector/1.0; +https://github.com/KienNT792/Thesis)",
+  "feeds": [
+    {"source": "cafef",     "name": "cafef_thi_truong_chung_khoan", "category": "market",    "url": "https://cafef.vn/thi-truong-chung-khoan.rss"},
+    {"source": "cafef",     "name": "cafef_doanh_nghiep",           "category": "company",   "url": "https://cafef.vn/doanh-nghiep.rss"},
+    {"source": "cafef",     "name": "cafef_vi_mo_dau_tu",           "category": "macro",     "url": "https://cafef.vn/vi-mo-dau-tu.rss"},
+    {"source": "cafef",     "name": "cafef_tai_chinh_ngan_hang",    "category": "banking",   "url": "https://cafef.vn/tai-chinh-ngan-hang.rss"},
+    {"source": "vietstock", "name": "vietstock_chung_khoan",        "category": "market",    "url": "https://vietstock.vn/144/chung-khoan.rss"},
+    {"source": "vietstock", "name": "vietstock_co_phieu",           "category": "market",    "url": "https://vietstock.vn/830/chung-khoan/co-phieu.rss"},
+    {"source": "vietstock", "name": "vietstock_nhan_dinh",          "category": "analysis",  "url": "https://vietstock.vn/579/nhan-dinh-phan-tich.rss"},
+    {"source": "vietstock", "name": "vietstock_vi_mo",              "category": "macro",     "url": "https://vietstock.vn/761/kinh-te/vi-mo.rss"},
+    {"source": "vietstock", "name": "vietstock_doanh_nghiep",       "category": "company",   "url": "https://vietstock.vn/733/doanh-nghiep.rss"},
+    {"source": "vietstock", "name": "vietstock_tai_chinh",          "category": "banking",   "url": "https://vietstock.vn/734/tai-chinh.rss"},
+    {"source": "vnexpress", "name": "vnexpress_kinh_doanh",         "category": "business",  "url": "https://vnexpress.net/rss/kinh-doanh.rss"}
+  ]
+}
