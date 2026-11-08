@@ -1,0 +1,9 @@
+{
+  "_comment": "SEED LIST - MUST BE VERIFIED. This is an approximate VN30 basket from general knowledge, NOT the official HOSE list for any specific date. VN30 is rebalanced twice a year (Feb and Aug); for the thesis, replace with the official constituents per rebalance period (see docs/DATA.md, 'Survivorship').",
+  "indices": ["VNINDEX", "VN30"],
+  "stocks": [
+    "ACB", "BCM", "BID", "BVH", "CTG", "FPT", "GAS", "GVR", "HDB", "HPG",
+    "MBB", "MSN", "MWG", "PLX", "POW", "SAB", "SHB", "SSB", "SSI", "STB",
+    "TCB", "TPB", "VCB", "VHM", "VIB", "VIC", "VJC", "VNM", "VPB", "VRE"
+  ]
+}
