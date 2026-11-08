@@ -1,0 +1,54 @@
+name: Backfill CafeF news
+
+# Manual, one-off historical backfill via CafeF's paginated timeline (RSS has no history).
+on:
+  workflow_dispatch:
+    inputs:
+      until:
+        description: "Oldest date to collect (YYYY-MM-DD)"
+        default: "2020-01-01"
+      start_page:
+        description: "Start page (1 = newest). Use to resume a stopped run."
+        default: "1"
+      zone:
+        description: "CafeF zone id (18831 = Thi truong chung khoan)"
+        default: "18831"
+      category:
+        description: "Category label stored in records"
+        default: "market"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writes
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run unit tests
+        run: python -m unittest discover -s tests
+      - name: Backfill
+        env:
+          UNTIL: ${{ inputs.until }}
+          START_PAGE: ${{ inputs.start_page }}
+          ZONE: ${{ inputs.zone }}
+          CATEGORY: ${{ inputs.category }}
+        run: python scripts/backfill_cafef.py --until "$UNTIL" --start-page "$START_PAGE" --zone "$ZONE" --category "$CATEGORY"
+      - name: Commit data
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "No new data."; exit 0; fi
+          git commit -m "data(news): cafef backfill $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

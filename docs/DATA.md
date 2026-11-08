@@ -78,3 +78,11 @@ python scripts/data_health.py
 ## Price source (updated 2026-11-08)
 
 TCBS bars endpoint returned HTTP 404 and was replaced by VNDirect dchart (TradingView UDF). Verified from a browser: VCB/VN30/VNINDEX, 2020-01-02..2026-11-06 in a single call. Prices are in **thousand VND** and appear **adjusted** for dividends/splits (VCB first close 2020-01-02 = 38.881). Implications: use returns, not raw levels, for modelling; adjusted history can be revised retroactively, so the upsert may report `changed` rows after corporate actions. Not yet confirmed from GitHub runners: run `dry_run` first.
+
+## News backfill (CafeF timeline)
+
+RSS has no history, so 2020-2025 news is backfilled from `https://cafef.vn/timelinelist/18831/<page>.chn` (market news, ~15 items/page, newest first; page ~3000 reaches Jan 2020) by `scripts/backfill_cafef.py` (workflow `Backfill CafeF news`). Fields: title, url, sapo (short summary), ISO timestamp in ICT.
+- Only CafeF "Thi truong chung khoan" zone; one source => source-selection bias. Other sources/zones can be added later.
+- For backfilled rows `first_seen_at` is the backfill time, not an event time. Use `published_at` only.
+- Only title + sapo are stored, not full text.
+- Check CafeF terms of service before any redistribution; keep use academic, low-rate.
