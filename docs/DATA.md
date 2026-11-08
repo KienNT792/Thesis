@@ -68,3 +68,9 @@ python scripts/collect_prices.py --tickers VCB,FPT --dry-run
 python scripts/collect_prices.py --start 2020-01-01      # historical backfill (or via workflow input)
 python scripts/data_health.py
 ```
+
+## VN30 constituents (added 2026-11)
+
+- `config/tickers.json` -> `stocks`: current basket (effective 2026-08-03, 30 tickers) plus verified leavers since 2021.
+- `config/vn30_history.csv`: **verified deltas only** (2021-08, 2026-02, 2026-05, 2026-08). Deltas for 2020-01..2021-07 and 2021-08..2026-01 (other reviews) are NOT yet collected; official full lists are published as images by HOSE.
+- Consequence: for point-in-time universe before 2026 the history is incomplete. Until completed, treat pre-2026 backtests as using a survivorship-biased universe and report it as a limitation.
