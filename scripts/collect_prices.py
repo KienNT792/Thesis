@@ -6,8 +6,7 @@ Idempotent upsert keyed by date, so it is safe to re-run and to backfill:
   python scripts/collect_prices.py --start 2020-01-01   # historical backfill, chunked by year
   python scripts/collect_prices.py --tickers VCB,FPT --dry-run
 
-The data provider is configured in config/prices.json and is UNVERIFIED (see _comment there).
-Raw provider values are stored as returned; validate units (VND vs thousand VND) on the first run.
+Provider: VNDirect dchart (TradingView UDF), configured in config/prices.json. Verified 2026-11-08 from a\nbrowser: full history from 2020-01-02 in one call. Prices are in THOUSAND VND and appear dividend/split-adjusted;\nthey are stored as returned (see docs/DATA.md).
 """
 from __future__ import annotations
 
@@ -44,7 +43,32 @@ def to_ts(d: date, end_of_day: bool = False) -> int:
     return int(dt.timestamp())
 
 
+def parse_udf(payload: dict) -> list[dict]:
+    """TradingView UDF format: {"t":[epoch...],"o":[],"h":[],"l":[],"c":[],"v":[],"s":"ok"}.
+    "s":"no_data" means an empty window (not an error)."""
+    if payload.get("s") != "ok":
+        return []
+    rows = []
+    for i, ts in enumerate(payload.get("t") or []):
+        try:
+            rows.append(
+                {
+                    "date": datetime.fromtimestamp(int(ts), tz=timezone.utc).strftime("%Y-%m-%d"),
+                    "open": payload["o"][i],
+                    "high": payload["h"][i],
+                    "low": payload["l"][i],
+                    "close": payload["c"][i],
+                    "volume": payload["v"][i],
+                }
+            )
+        except (KeyError, IndexError, TypeError, ValueError):
+            continue
+    return rows
+
+
 def parse_rows(payload: dict) -> list[dict]:
+    if "t" in payload and "c" in payload:
+        return parse_udf(payload)
     rows = []
     for bar in payload.get("data") or []:
         trading_date = str(bar.get("tradingDate", ""))[:10]

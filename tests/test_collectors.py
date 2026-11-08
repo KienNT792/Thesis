@@ -93,6 +93,13 @@ class PriceTests(unittest.TestCase):
             self.assertEqual(cp.upsert_csv(path, rows), (0, 1))  # revision detected
             self.assertEqual(len(path.read_text().splitlines()), 3)
 
+    def test_parse_udf(self):
+        payload = {"t": [1759276800, 1759363200], "o": [1, 2], "h": [2, 3], "l": [1, 2], "c": [2, 3], "v": [10, 20], "s": "ok"}
+        rows = cp.parse_rows(payload)
+        self.assertEqual([r["date"] for r in rows], ["2025-10-01", "2025-10-02"])
+        self.assertEqual(rows[1]["volume"], 20)
+        self.assertEqual(cp.parse_rows({"s": "no_data"}), [])
+
     def test_sanity(self):
         good = {"date": "d", "open": 10, "high": 12, "low": 9, "close": 11}
         bad = {"date": "d", "open": 10, "high": 8, "low": 9, "close": 11}
