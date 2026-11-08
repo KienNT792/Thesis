@@ -1,10 +1,15 @@
 {
-  "_comment": "VNDirect dchart (TradingView UDF). Verified from a browser on 2026-11-08 (VCB, VN30, VNINDEX; 2020-01-02..2026-11-06 in one call; prices in thousand VND, adjusted). The earlier TCBS endpoint returned HTTP 404. Not yet confirmed from GitHub runners: run dry_run first.",
-  "user_agent": "Mozilla/5.0 (compatible; ThesisPriceCollector/1.0; +https://github.com/KienNT792/Thesis)",
+  "_comment": "VNDirect dchart (TradingView UDF). Verified from a browser on 2026-11-08 (VCB, VN30, VNINDEX; 2020-01-02..2026-11-06 in one call; prices in thousand VND, adjusted). The earlier TCBS endpoint returned HTTP 404. Not yet confirmed from GitHub runners: run dry_run first. GitHub runner got HTTP 406 with the bot-style User-Agent (WAF); switched to a browser User-Agent plus Origin/Referer. Use only for low-volume academic collection and check provider ToS.",
+  "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
   "url_template": "https://dchart-api.vndirect.com.vn/dchart/history?symbol={ticker}&resolution=D&from={from_ts}&to={to_ts}",
   "kind_stock": "stock",
   "kind_index": "index",
   "chunk_days": 365,
   "default_lookback_days": 14,
-  "request_delay_seconds": 0.5
+  "request_delay_seconds": 0.5,
+  "headers": {
+    "Origin": "https://dchart.vndirect.com.vn",
+    "Referer": "https://dchart.vndirect.com.vn/",
+    "Accept-Language": "en-US,en;q=0.9"
+  }
 }
