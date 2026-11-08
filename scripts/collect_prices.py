@@ -24,11 +24,11 @@ ROOT = Path(__file__).resolve().parent.parent
 FIELDS = ["date", "open", "high", "low", "close", "volume"]
 
 
-def fetch_json(url: str, user_agent: str, retries: int = 3, timeout: int = 30) -> dict:
+def fetch_json(url: str, user_agent: str, retries: int = 3, timeout: int = 30, extra_headers: dict | None = None) -> dict:
     last: Exception | None = None
     for attempt in range(1, retries + 1):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": user_agent, "Accept": "application/json"})
+            req = urllib.request.Request(url, headers={"User-Agent": user_agent, "Accept": "application/json, text/plain, */*", **(extra_headers or {})})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return json.loads(resp.read().decode("utf-8"))
         except (urllib.error.URLError, TimeoutError, ConnectionError, json.JSONDecodeError) as exc:
@@ -160,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
             while chunk_start <= end:
                 chunk_end = min(chunk_start + timedelta(days=int(cfg["chunk_days"]) - 1), end)
                 url = cfg["url_template"].format(ticker=ticker, kind=kind, from_ts=to_ts(chunk_start), to_ts=to_ts(chunk_end, True))
-                rows.extend(parse_rows(fetch_json(url, cfg["user_agent"])))
+                rows.extend(parse_rows(fetch_json(url, cfg["user_agent"], extra_headers=cfg.get("headers"))))
                 chunk_start = chunk_end + timedelta(days=1)
                 time.sleep(float(cfg["request_delay_seconds"]))
             rows = [r for r in rows if start.isoformat() <= r["date"] <= end.isoformat()]
