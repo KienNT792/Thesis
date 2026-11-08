@@ -74,3 +74,7 @@ python scripts/data_health.py
 - `config/tickers.json` -> `stocks`: current basket (effective 2026-08-03, 30 tickers) plus verified leavers since 2021.
 - `config/vn30_history.csv`: **verified deltas only** (2021-08, 2026-02, 2026-05, 2026-08). Deltas for 2020-01..2021-07 and 2021-08..2026-01 (other reviews) are NOT yet collected; official full lists are published as images by HOSE.
 - Consequence: for point-in-time universe before 2026 the history is incomplete. Until completed, treat pre-2026 backtests as using a survivorship-biased universe and report it as a limitation.
+
+## Price source (updated 2026-11-08)
+
+TCBS bars endpoint returned HTTP 404 and was replaced by VNDirect dchart (TradingView UDF). Verified from a browser: VCB/VN30/VNINDEX, 2020-01-02..2026-11-06 in a single call. Prices are in **thousand VND** and appear **adjusted** for dividends/splits (VCB first close 2020-01-02 = 38.881). Implications: use returns, not raw levels, for modelling; adjusted history can be revised retroactively, so the upsert may report `changed` rows after corporate actions. Not yet confirmed from GitHub runners: run `dry_run` first.

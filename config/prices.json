@@ -1,7 +1,7 @@
 {
-  "_comment": "UNVERIFIED endpoint: TCBS public bars API (the same family used by the open-source vnstock library). Not reachable from the authoring sandbox, so it has NOT been tested. Run the 'Collect prices' workflow manually once and inspect the log before trusting it. Swap url_template here if the provider changes; expected JSON: {\"data\": [{\"tradingDate\", \"open\", \"high\", \"low\", \"close\", \"volume\"}, ...]}.",
+  "_comment": "VNDirect dchart (TradingView UDF). Verified from a browser on 2026-11-08 (VCB, VN30, VNINDEX; 2020-01-02..2026-11-06 in one call; prices in thousand VND, adjusted). The earlier TCBS endpoint returned HTTP 404. Not yet confirmed from GitHub runners: run dry_run first.",
   "user_agent": "Mozilla/5.0 (compatible; ThesisPriceCollector/1.0; +https://github.com/KienNT792/Thesis)",
-  "url_template": "https://apipubaws.tcbs.com.vn/stock-insight/v1/stock/bars-long-term?ticker={ticker}&type={kind}&resolution=D&from={from_ts}&to={to_ts}",
+  "url_template": "https://dchart-api.vndirect.com.vn/dchart/history?symbol={ticker}&resolution=D&from={from_ts}&to={to_ts}",
   "kind_stock": "stock",
   "kind_index": "index",
   "chunk_days": 365,
