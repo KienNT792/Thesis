@@ -1,0 +1,15 @@
+effective_date,action,ticker,note
+2021-08-02,add,ACB,verified (HOSE semi-annual review)
+2021-08-02,add,GVR,verified
+2021-08-02,add,SAB,verified
+2021-08-02,remove,REE,verified
+2021-08-02,remove,SBT,verified
+2021-08-02,remove,TCH,verified
+2026-02-02,add,VPL,verified (Q1/2026 review)
+2026-02-02,remove,BCM,verified
+2026-05-13,add,BSR,verified (mid-cycle replacement)
+2026-05-13,remove,DGC,verified
+2026-08-03,add,MCH,verified (Jul-2026 review)
+2026-08-03,add,TCX,verified
+2026-08-03,remove,PLX,verified
+2026-08-03,remove,TPB,verified
