@@ -110,3 +110,12 @@ Second source for 2020-2025: `POST https://vietstock.vn/StartPage/ChannelContent
 - Listing timestamps have no year; the year is taken from the URL and corrected at the Dec/Jan boundary.
 - Per month the collector compares fetched item count with the site's reported total and prints `MISMATCH` if they differ.
 - Overlap between channels is removed by URL hash; cross-source duplicates (same story on CafeF and Vietstock) are NOT removed here: deduplicate near-identical titles at the modelling stage.
+
+## Session assignment and deduplication (added 2026-11-09)
+
+`scripts/assign_session.py` implements the look-ahead rule: an article published on a trading day at or before 15:00 ICT belongs to that day's session; after 15:00 or on a non-trading day it belongs to the next trading day. A forecast made at the close of day t may use only articles with `session_date <= t`. Dedupe keeps the earliest article per normalised URL, then per (normalised title, ICT date).
+
+Measured on 122,824 articles (run 2026-11-09): 122,557 remain after dedupe (0.22% removed); session counts with all categories reach >=20 articles on 100% of 1,709 trading days (market-category only: 99.9%); placeholder timestamps (00:00:00 ICT) are 0.008%. Median articles per session rose from 53 (2020) to 76 (2026). Run `python scripts/assign_session.py --report` to reproduce.
+
+Price coverage of point-in-time VN30 members: 99.47% of member-days overall; the only gap is ROS (272 member-days to 2021-02-01, no data from the price provider), all other members are complete.
+
