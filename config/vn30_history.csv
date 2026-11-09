@@ -1,15 +1,41 @@
 effective_date,action,ticker,note
-2021-08-02,add,ACB,verified (HOSE semi-annual review)
-2021-08-02,add,GVR,verified
-2021-08-02,add,SAB,verified
+2020-02-03,remove,DPM,verified
+2020-02-03,remove,GMD,verified
+2020-02-03,add,PLX,verified (Jan-2020 review; KBSV list + VnEconomy)
+2020-02-03,add,POW,verified (Jan-2020 review)
+2020-08-03,remove,BVH,verified
+2020-08-03,remove,CTD,verified
+2020-08-03,add,KDH,verified (Jul-2020 review; HOSE announcement 20/07/2020 per VnExpress, VDSC, KIS)
+2020-08-03,add,TCH,verified
+2021-02-01,remove,EIB,verified
+2021-02-01,remove,ROS,verified
+2021-02-01,remove,SAB,verified
+2021-02-01,add,BVH,verified (Jan-2021 review; VnEconomy)
+2021-02-01,add,PDR,verified
+2021-02-01,add,TPB,verified
 2021-08-02,remove,REE,verified
 2021-08-02,remove,SBT,verified
 2021-08-02,remove,TCH,verified
-2026-02-02,add,VPL,verified (Q1/2026 review)
+2021-08-02,add,ACB,verified (HOSE semi-annual review)
+2021-08-02,add,GVR,verified
+2021-08-02,add,SAB,verified
+2022-08-01,remove,PNJ,verified
+2022-08-01,add,VIB,verified (Jul-2022 review; VnEconomy, Znews)
+2023-02-06,remove,KDH,verified
+2023-02-06,add,BCM,verified (Jan-2023 review; VnEconomy, PHS)
+2023-08-07,remove,NVL,verified
+2023-08-07,remove,PDR,verified
+2023-08-07,add,SHB,verified
+2023-08-07,add,SSB,verified (Jul-2023 review; Tap chi Cong Thuong, PHS)
+2025-02-03,remove,POW,verified
+2025-02-03,add,LPB,verified (Jan-2025 review; VnEconomy)
+2025-08-04,remove,BVH,verified
+2025-08-04,add,DGC,verified (Jul-2025 review; PHS, VnEconomy, TBTC)
 2026-02-02,remove,BCM,verified
-2026-05-13,add,BSR,verified (mid-cycle replacement)
+2026-02-02,add,VPL,verified (Q1/2026 review)
 2026-05-13,remove,DGC,verified
-2026-08-03,add,MCH,verified (Jul-2026 review)
-2026-08-03,add,TCX,verified
+2026-05-13,add,BSR,verified (mid-cycle replacement)
 2026-08-03,remove,PLX,verified
 2026-08-03,remove,TPB,verified
+2026-08-03,add,MCH,verified (Jul-2026 review)
+2026-08-03,add,TCX,verified
