@@ -56,8 +56,17 @@ so later updates by the outlet are not reflected (this is intentional, it freeze
 5. **Schedules can be delayed or paused.** GitHub may delay cron by several minutes and disables
    scheduled workflows in repositories with no activity for 60 days. The weekly health job and the
    data commits normally keep the repo active; if the repo goes quiet, re-enable from the Actions tab.
-6. **Holidays.** The health job flags weekdays with zero articles for a source; Tet and public
+6. **Holidays.** The health job flags weekdays with zero articles for a source (only from the day the
+   source first appears in the data) and prices more than 3 business days old; Tet and public
    holidays will raise expected alerts.
+7. **Vietstock month-end gap (fixed 2026-11-09).** The archive endpoint treats `todate` as exclusive,
+   so backfills up to 2026-11-08 dropped every article published on the last day of a month (58
+   weekdays, 2020-2026). `backfill_vietstock.py` now uses the first day of the next month. To repair
+   existing data run *Backfill Vietstock news* with `month_end_only=true`, `from_month=2020-01`,
+   `until_month=2026-10`, `dry_run=false`.
+8. **Provider price gaps.** A few tickers miss 3-10 trading days in 2020-2025 (e.g. BCM, LPB, VIB,
+   BSR, MCH) relative to the VNINDEX calendar. The health job only checks the recent window.
+   Re-run *Collect prices* with a full-range start to try to fill them, otherwise treat as missing.
 
 ## Commands
 

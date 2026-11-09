@@ -179,8 +179,23 @@ def months(start: str, end: str):
             y, m = y + 1, 1
 
 
+def month_window(y: int, m: int, month_end_only: bool = False) -> tuple[str, str]:
+    """(fromdate, todate) for the listing endpoint.
+
+    `todate` behaves as an EXCLUSIVE bound: using the last day of the month silently dropped every
+    article published on that day (58 weekday gaps 2020-2026, all month-ends). So `todate` is the
+    first day of the next month.  `month_end_only` fetches just the last day, to repair old data
+    without re-crawling whole months.
+    """
+    last = calendar.monthrange(y, m)[1]
+    ny, nm = (y + 1, 1) if m == 12 else (y, m + 1)
+    d0 = f"{y}-{m:02d}-{last:02d}" if month_end_only else f"{y}-{m:02d}-01"
+    return d0, f"{ny}-{nm:02d}-01"
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--month-end-only", action="store_true", help="fetch only the last day of each month (repair mode)")
     ap.add_argument("--from", dest="start", default="2020-01", help="first month YYYY-MM")
     ap.add_argument("--until", default="2025-12", help="last month YYYY-MM")
     ap.add_argument("--channels", default="144,733,734,761")
@@ -197,7 +212,7 @@ def main(argv: list[str] | None = None) -> int:
         cat = CATEGORY.get(channel, "other")
         feed = f"vietstock_ch{channel}_archive"
         for y, m in months(args.start, args.until):
-            d0, d1 = f"{y}-{m:02d}-01", f"{y}-{m:02d}-{calendar.monthrange(y, m)[1]:02d}"
+            d0, d1 = month_window(y, m, args.month_end_only)
             page, month_new, expected, got = 1, 0, None, 0
             buf: list[dict] = []
             while True:
@@ -235,6 +250,8 @@ def main(argv: list[str] | None = None) -> int:
                 append_records(news_dir, buf)
             grand_new += month_new
             flag = "" if expected is None or abs(got - expected) <= 2 else f"  MISMATCH expected={expected}"
+            if args.month_end_only:
+                flag = ""  # expected count may include the next month's first day
             print(f"ch{channel} {y}-{m:02d}: items={got} new={month_new}{flag}")
     print(f"done: pages={pages} new={grand_new} dry_run={args.dry_run}")
     return 0 if pages else 1
