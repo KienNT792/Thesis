@@ -1,0 +1,58 @@
+name: Backfill Vietstock news
+
+# Manual historical backfill (RSS has no history). Run once with dry_run=true on a single month first.
+on:
+  workflow_dispatch:
+    inputs:
+      from_month:
+        description: "First month (YYYY-MM)"
+        default: "2020-01"
+      until_month:
+        description: "Last month (YYYY-MM)"
+        default: "2025-12"
+      channels:
+        description: "Comma-separated Vietstock channel ids (144 market, 733 company, 734 finance, 761 macro)"
+        default: "144,733,734,761"
+      dry_run:
+        description: "true = fetch and report only, write nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writes
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run unit tests
+        run: python -m unittest discover -s tests
+      - name: Backfill
+        env:
+          FROM_M: ${{ inputs.from_month }}
+          UNTIL_M: ${{ inputs.until_month }}
+          CHANNELS: ${{ inputs.channels }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          args=(--from "$FROM_M" --until "$UNTIL_M" --channels "$CHANNELS")
+          [ "$DRY_RUN" = "true" ] && args+=(--dry-run)
+          python scripts/backfill_vietstock.py "${args[@]}"
+      - name: Commit data
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "No new data."; exit 0; fi
+          git commit -m "data(news): vietstock backfill $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
