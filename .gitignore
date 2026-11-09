@@ -221,3 +221,6 @@ __marimo__/
 
 # Derived analysis files (rebuild with scripts/build_dataset.py)
 data/derived/
+
+# Pilot sample (article text; regenerate with scripts/sample_pilot.py; keep annotations outside git until G6 is cleared)
+data/pilot/
