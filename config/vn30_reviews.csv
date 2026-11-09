@@ -1,0 +1,26 @@
+review,effective_date,result,evidence,delta,sources
+2020-01,2020-02-03,changed,A,+PLX +POW -DPM -GMD,kbsec.com.vn KBSV_Capnhatdanhmuc_VN30_VNFIN_LEAD.pdf; vneconomy.vn plx-va-pow-duoc-du-bao-lot-ro-vn30
+2020-04,,no_change_inferred,C,,not retrieved; consistent with chain and anchors
+2020-07,2020-08-03,changed,A,+KDH +TCH -CTD -BVH,e.vnexpress.net vn-index-edges-up-after-two-losing-sessions; dataen.vdsc.com.vn 2020/07; kisvn.vn Bai-Daily-ngay_Vi_20200722.pdf
+2020-10,2020-11-02,no_change_unconfirmed,C,,kbsec.com.vn Co_cau_thang_10_2020_VNI.pdf (forecast only); consistent with chain
+2021-01,2021-02-01,changed,A,+BVH +PDR +TPB -ROS -SAB -EIB,vneconomy.vn doi-ro-vn30-ros-sab-eib-nhuong-cho-cho-bvh-pdr-va-tpb
+2021-04,2021-05-03,no_change,A,,vneconomy.vn tcm-va-5-co-phieu-ngan-hang-lot-ro-vndiamond-ky-thang-4; viettimes.vn post144754
+2021-07,2021-08-02,changed,A,+ACB +GVR +SAB -REE -SBT -TCH,nhadautu.vn acb-gvr-sab-chinh-thuc-lot-danh-muc-chi-so-vn30-d55146
+2021-10,2021-11-01,no_change,A,,nguoiquansat.vn co-phieu-tcm-va-lpb-bi-loai-khoi-ro-diamond-index
+2022-01,2022-02-07,no_change,A,,thitruongtaichinhtiente.vn 38996 (KBSV had forecast -SAB -PNJ +SHB +SSB; not realised)
+2022-04,2022-05-02,no_change,A,,thoibaotaichinhvietnam.vn 103724
+2022-07,2022-08-01,changed,A,+VIB -PNJ,vneconomy.vn cac-quy-etf-se-mua-ban-gi-trong-ky-co-cau-thang-7-2022; znews.vn post1337093
+2022-10,2022-11-07,no_change,B,,vietnamfinance.vn d87817 (date of article inferred)
+2023-01,2023-02-06,changed,A,+BCM -KDH,vneconomy.vn nhom-vn30-chinh-thuc-co-tan-binh-thay-the-cho-kdh; phs.vn research-file 2654
+2023-04,2023-05-04,no_change,A,,vneconomy.vn cac-quy-etf-sap-ban-ra-hang-chuc-trieu-co-phieu-msb-va-acb; 24hmoney c1a1880081
+2023-07,2023-08-07,changed,A,+SSB +SHB -PDR -NVL,tapchicongthuong.vn 107688; phs.vn research-file 3202
+2023-10,,no_change,A,,thoibaotaichinhvietnam.vn 137725
+2024-01,2024-02-05,no_change_inferred,C,,HOSE result published 2024-01-16 (thitruongtaichinhtiente 55608); composition not retrieved
+2024-04,,no_change_inferred,C,,not retrieved
+2024-07,2024-08-05,no_change,A,,baophapluat ssi-research-dieu-chinh-danh-muc-vn30; dsc.com.vn HOSE_KQ_17072024
+2024-10,2024-11-04,no_change,A,,vneconomy.vn mot-co-phieu-sap-bi-5-etf-ban-ra-11-3-trieu-don-vi
+2025-01,2025-02-03,changed,A,+LPB -POW,vneconomy.vn du-bao-2-co-phieu-sap-bi-hang-loat-etf-ban-ra-dang-ke
+2025-07,2025-08-04,changed,A,+DGC -BVH,phs.vn research-file 4412; vneconomy.vn dgc-chinh-thuc-lot-ro-vn30; thitruongtaichinhtiente 69135
+2026-01,2026-02-02,changed,repo,+VPL -BCM,already in vn30_history.csv
+2026-05,2026-05-13,changed,repo,+BSR -DGC (mid-cycle),already in vn30_history.csv
+2026-07,2026-08-03,changed,repo,+MCH +TCX -PLX -TPB,already in vn30_history.csv

@@ -89,8 +89,8 @@ python scripts/data_health.py
 ## VN30 constituents (added 2026-11)
 
 - `config/tickers.json` -> `stocks`: current basket (effective 2026-08-03, 30 tickers) plus verified leavers since 2021.
-- `config/vn30_history.csv`: **verified deltas only** (2021-08, 2026-02, 2026-05, 2026-08). Deltas for 2020-01..2021-07 and 2021-08..2026-01 (other reviews) are NOT yet collected; official full lists are published as images by HOSE.
-- Consequence: for point-in-time universe before 2026 the history is incomplete. Until completed, treat pre-2026 backtests as using a survivorship-biased universe and report it as a limitation.
+- `config/vn30_baseline.csv` (basket on 2020-01-02) + `config/vn30_history.csv` (deltas, 2020-02-03 .. 2026-08-03) give the point-in-time VN30 universe. `scripts/vn30_universe.py --validate` checks 30 members after every date and equality with the independent full lists in `config/vn30_anchors.csv` (KBSV 2020-02 and 2022-01). `config/vn30_reviews.csv` logs every semi-annual/quarterly review with evidence level (A = official-result article, B = date inferred, C = inferred from chain/forecast) and source URLs.
+- Residual risk: reviews 2020-04, 2020-10, 2024-01 and 2024-04 are evidence level C (no change inferred; chain and both anchors remain consistent). Confirm against HOSE announcements before final submission. Price files for the 11 former members added to `tickers.json` must be collected (Collect prices workflow, start=2020-01-01); ROS and EIB may return no data.
 
 ## Price source (updated 2026-11-08)
 
