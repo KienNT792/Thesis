@@ -41,9 +41,10 @@ so later updates by the outlet are not reflected (this is intentional, it freeze
 
 ## Known limitations (read before using the data)
 
-1. **News depth starts at the first successful run.** RSS only exposes ~2-3 days. There is no
-   2020-2025 news history in this repo; that requires a separate archive source and a decision on
-   terms of use.
+1. **News history comes from backfills, not RSS.** RSS only exposes ~2-3 days. CafeF (market zone
+   only) and Vietstock (4 channels) are backfilled from 2020-01 (see the two backfill sections
+   below); VnExpress has RSS only, starting 2026-11-05. Coverage differs per source and category,
+   so treat news volume as source-dependent, not as a uniform market signal.
 2. **Price endpoint is unverified.** `config/prices.json` points to a TCBS public API that could not be
    tested from the authoring environment. Run *Collect prices* manually with `dry_run=true` first,
    then check units (VND vs thousand VND), adjusted vs unadjusted prices, and the date convention
@@ -59,14 +60,21 @@ so later updates by the outlet are not reflected (this is intentional, it freeze
 6. **Holidays.** The health job flags weekdays with zero articles for a source (only from the day the
    source first appears in the data) and prices more than 3 business days old; Tet and public
    holidays will raise expected alerts.
-7. **Vietstock month-end gap (fixed 2026-11-09).** The archive endpoint treats `todate` as exclusive,
-   so backfills up to 2026-11-08 dropped every article published on the last day of a month (58
-   weekdays, 2020-2026). `backfill_vietstock.py` now uses the first day of the next month. To repair
-   existing data run *Backfill Vietstock news* with `month_end_only=true`, `from_month=2020-01`,
-   `until_month=2026-10`, `dry_run=false`.
-8. **Provider price gaps.** A few tickers miss 3-10 trading days in 2020-2025 (e.g. BCM, LPB, VIB,
-   BSR, MCH) relative to the VNINDEX calendar. The health job only checks the recent window.
-   Re-run *Collect prices* with a full-range start to try to fill them, otherwise treat as missing.
+7. **Vietstock month-end gap (fixed and repaired 2026-11-09).** The archive endpoint treats `todate`
+   as exclusive, so backfills up to 2026-11-08 dropped every article published on the last day of a
+   month (58 weekdays, 2020-2026). `backfill_vietstock.py` now uses the first day of the next
+   month, and a repair run (`month_end_only=true`, 2020-01..2026-10) added 2,517 articles. After the
+   repair no weekday is empty for CafeF or Vietstock. Features or LLM scores computed before this
+   date miss those articles and must be recomputed for month-end days.
+8. **Provider price gaps (confirmed, not fixable from this provider).** Some tickers miss 3-10 trading
+   days in 2020-2025 relative to the VNINDEX calendar (e.g. ACB 5, BCM 7, BSR 8, LPB 10, VIB 7,
+   MCH 5). A full-range *Collect prices* dry run on 2026-11-09 (`start=2020-01-01`) returned
+   `added=0, changed=0` for all 39 symbols, so VNDirect does not have these days. Treat them as
+   missing (do not forward-fill silently), or fill from a second provider and document it.
+   The health job only checks the recent window.
+9. **OHLC anomalies in provider data.** Two bars fail the OHLC sanity check: VNINDEX 2020-09-29
+   (close below low) and VNM 2025-05-13 (close below low). They are kept as delivered; exclude or
+   correct them explicitly in modelling.
 
 ## Commands
 
