@@ -13,6 +13,10 @@ on:
       channels:
         description: "Comma-separated Vietstock channel ids (144 market, 733 company, 734 finance, 761 macro)"
         default: "144,733,734,761"
+      month_end_only:
+        description: "true = fetch only the last day of each month (repairs the month-end gap, fast)"
+        type: boolean
+        default: false
       dry_run:
         description: "true = fetch and report only, write nothing"
         type: boolean
@@ -42,9 +46,11 @@ jobs:
           UNTIL_M: ${{ inputs.until_month }}
           CHANNELS: ${{ inputs.channels }}
           DRY_RUN: ${{ inputs.dry_run }}
+          MONTH_END: ${{ inputs.month_end_only }}
         run: |
           args=(--from "$FROM_M" --until "$UNTIL_M" --channels "$CHANNELS")
           [ "$DRY_RUN" = "true" ] && args+=(--dry-run)
+          [ "$MONTH_END" = "true" ] && args+=(--month-end-only)
           python scripts/backfill_vietstock.py "${args[@]}"
       - name: Commit data
         if: always()
