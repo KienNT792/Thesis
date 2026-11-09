@@ -86,3 +86,10 @@ RSS has no history, so 2020-2025 news is backfilled from `https://cafef.vn/timel
 - For backfilled rows `first_seen_at` is the backfill time, not an event time. Use `published_at` only.
 - Only title + sapo are stored, not full text.
 - Check CafeF terms of service before any redistribution; keep use academic, low-rate.
+
+## News backfill (Vietstock channel listing)
+
+Second source for 2020-2025: `POST https://vietstock.vn/StartPage/ChannelContentPage` (channelID, page, fromdate, todate), 10 items/page, processed month by month by `scripts/backfill_vietstock.py` (workflow `Backfill Vietstock news`). Channels: 144 (market, parent of 830 stocks / 579 analysis), 733 (company), 734 (finance), 761 (macro). Stored: title, url, truncated sapo, timestamp.
+- Listing timestamps have no year; the year is taken from the URL and corrected at the Dec/Jan boundary.
+- Per month the collector compares fetched item count with the site's reported total and prints `MISMATCH` if they differ.
+- Overlap between channels is removed by URL hash; cross-source duplicates (same story on CafeF and Vietstock) are NOT removed here: deduplicate near-identical titles at the modelling stage.
