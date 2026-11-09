@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Derived analysis files (rebuild with scripts/build_dataset.py)
+data/derived/
