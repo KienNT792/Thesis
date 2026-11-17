@@ -1,0 +1,5 @@
+# Captured 2026-11-17 from https://cafef.vn/robots.txt (pasted by the repository owner from a browser)
+User-agent: *
+Allow: /
+Sitemap: https://cafef.vn/sitemap.xml
+Sitemap: https://cafef.vn/google-news-sitemap.xml

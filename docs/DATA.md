@@ -119,3 +119,24 @@ Measured on 122,824 articles (run 2026-11-09): 122,557 remain after dedupe (0.22
 
 Price coverage of point-in-time VN30 members: 99.47% of member-days overall; the only gap is ROS (272 member-days to 2021-02-01, no data from the price provider), all other members are complete.
 
+
+## Legal review (G6, 2026-11-17)
+
+Reviewer: repository owner. Sources: terms-of-use / copyright pages of CafeF and Vietstock, plus robots.txt (verbatim copies in `docs/legal/`). Not legal advice.
+
+| Question | CafeF | Vietstock |
+|---|---|---|
+| Terms prohibit automated collection (crawl, scrape, robot, extraction)? | No | No |
+| Terms prohibit copying, storing or republishing content? Academic exception? | No prohibition found | No prohibition found |
+| Written consent required before reuse? | No | No |
+| Quotation limit or attribution rule stated? | None stated | None stated |
+| Official permission channel? | None found | None found |
+| robots.txt blocks paths used by this project? | No (`Allow: /`) | No (blocks only `/*.js`, `/*.css`, `/manager`, `/export`, `/cache`) |
+
+Paths used: CafeF `/timelinelist/<page>.chn` and `*.rss`; Vietstock `POST /StartPage/ChannelContentPage` and channel pages. None match a Disallow rule. VnExpress (63 articles, 0.05%) robots.txt not yet checked; drop the source if `/rss` is disallowed.
+
+Decision: **G6 PASS with conditions.** The absence of a prohibition is not a licence: article text remains copyrighted by the publishers.
+1. Use is limited to internal academic analysis for the graduation project, low request rate, no new sources without a new review.
+2. Published outputs contain only `article_id`, URL, timestamp, LLM scores and aggregates. Titles and summaries are not republished in bulk (thesis text, appendices or any public repository).
+3. Repository visibility is **private** (changed 2026-11-17) because `data/news/*.jsonl` stores titles and summaries. Before any public release, remove the text columns from the working tree and rewrite history, or publish a fresh ID-only dataset.
+4. Do not call paths under Vietstock `/export`, `/manager`, `/cache`. Re-check both robots.txt files before the final submission and whenever a collector changes.
