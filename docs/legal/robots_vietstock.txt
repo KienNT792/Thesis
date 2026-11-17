@@ -1,0 +1,10 @@
+# Captured 2026-11-17 from https://vietstock.vn/robots.txt (pasted by the repository owner from a browser)
+User-agent: *
+
+Disallow: /*.js
+Disallow: /*.css
+Disallow: /manager
+Disallow: /export
+Disallow: /cache
+
+Sitemap: https://vietstock.vn/sitemap.xml
